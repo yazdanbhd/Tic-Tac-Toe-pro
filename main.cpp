@@ -135,6 +135,80 @@ int minimax(bool isMax, int depth, int alpha, int beta)
     }
 }
 
+// Find best move for AI
+pair<int , int> findBestMove()
+{
+    int bestValForX = -1000;
+    int bestValForO = -1000;
+    pair<int, int> bestMoveForX;
+    pair<int, int> bestMoveForO;
+    pair<int, int> bestMove;
+
+    // initialize marks for simulate
+    playerMark = 'X';
+    aiMark = 'O';
+
+    // check best move for X
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            if (board[i][j] != 'X' && board[i][j] != 'O')
+            {
+                board[i][j] = aiMark;
+                int moveVal = minimax(false,0, -1000, 1000);
+                board[i][j] = ' '; // Reset the cell properly
+
+                // Store the best move and value
+                if (moveVal > bestValForX)
+                {
+                    bestMoveForX = make_pair(i, j);
+                    bestValForX = moveVal;
+                }
+            }
+        }
+    }
+
+    // check best move for O
+    aiMark = 'O';
+    playerMark = 'X';
+
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            if (board[i][j] != 'X' && board[i][j] != 'O')
+            {
+                board[i][j] = aiMark;
+                int moveVal = minimax(false,0, -1000, 1000);
+                board[i][j] = ' '; // Reset the cell properly
+
+                // Store the best move and value
+                if (moveVal > bestValForO) {
+                    bestMoveForO = make_pair(i, j);
+                    bestValForO = moveVal;
+                }
+            }
+        }
+    }
+
+    // Decide the best mark to use
+    if (bestValForX >= bestValForO)
+    {
+        aiMark = 'X';
+        bestMove = bestMoveForX;
+    }
+    else
+    {
+        aiMark = 'O';
+        bestMove = bestMoveForO;
+    }
+
+
+    return bestMove;
+}
+
+
 int main()
 {
     printBoard();
