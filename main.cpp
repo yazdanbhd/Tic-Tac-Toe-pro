@@ -90,6 +90,11 @@ bool isBoardFull()
 // minimax algorithm (with alpha-beta pruning)
 int minimax(bool isMax, int depth, int alpha, int beta)
 {
+    int score = evaluate();
+    if (score == 10) return score - depth;
+    if (score == -10) return score + depth;
+    if (isBoardFull()) return 0;
+
     if (isMax)
     {
         int best = -1000;
