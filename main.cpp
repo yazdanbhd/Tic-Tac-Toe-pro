@@ -4,8 +4,10 @@
 using namespace std;
 
 vector<vector <char>> board(3, vector<char>(3, ' '));
+void makeAIMove(pair<int, int> , char );
 
 char playerMark, aiMark;
+bool playerTurn = true;
 
 // Print board
 void printBoard()
@@ -204,14 +206,29 @@ pair<int , int> findBestMove()
         bestMove = bestMoveForO;
     }
 
-
+    makeAIMove(bestMove, aiMark);
     return bestMove;
+}
+
+// make a move for AI
+void makeAIMove(pair<int, int> bestMove, char marker)
+{
+    board[bestMove.first][bestMove.second] = marker;
 }
 
 
 int main()
 {
+    int row, col;
     printBoard();
+    while (true)
+    {
+        if (playerTurn)
+        {
+            //TODO
+        }
+        //TODO
+    }
 
     return 0;
 }
