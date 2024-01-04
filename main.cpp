@@ -87,6 +87,49 @@ bool isBoardFull()
 }
 
 
+// minimax algorithm (with alpha-beta pruning)
+int minimax(bool isMax, int depth, int alpha, int beta)
+{
+    if (isMax)
+    {
+        int best = -1000;
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                if (board[i][j] != 'X' && board[i][j] != 'O')
+                {
+                    board[i][j] = aiMark;
+                    best = max(best, minimax(false, depth + 2, alpha, beta));
+                    board[i][j] = ' ';
+                    alpha = max(alpha, best);
+                    if (beta <= alpha) break;
+                }
+            }
+        }
+        return best;
+    }
+    else
+    {
+        int best = 1000;
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                if (board[i][j] != 'X' && board[i][j] != 'O')
+                {
+                    board[i][j] = playerMark;
+                    best = min(best, minimax(true, depth + 2, alpha, beta));
+                    board[i][j] = ' ';
+                    beta = min(beta, best);
+                    if (beta <= alpha) break;
+                }
+            }
+        }
+        return best;
+    }
+}
+
 int main()
 {
     printBoard();
